@@ -1,144 +1,144 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>نفذ الشروط</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-* { box-sizing: border-box; margin:0; padding:0; }
-body {
-  font-family: 'Tahoma', sans-serif;
-  background: #111;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 10px;
-}
-.page-container {
-  width: 100%;
-  max-width: 600px;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 0 25px #0ff8;
-}
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.top-image-container {
-  background: linear-gradient(45deg, #06f, #0ff);
-  padding: 10px;
-  border-radius: 15px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 18px #0ff8;
-}
-.top-image-container img {
-  width: 100%;
-  border-radius: 12px;
-  display: block;
-  height: auto;
-}
-h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #00ffff;
-  text-shadow: 0 0 8px #0ff, 0 0 15px #0ff;
-  text-align: center;
-}
-.progress-container {
-  width: 100%;
-  height: 20px;
-  background-color: #444;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 10px #0ff6;
-  margin-bottom: 25px;
-}
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #0ff, #00f);
-  transition: width 0.5s ease;
-  border-radius: 12px;
-}
-.step {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #111a;
-  border: 2px solid #444;
-  border-radius: 14px;
-  padding: 14px 18px;
-  margin: 12px auto;
-  width: 100%;
-  box-shadow: 0 0 10px #0ff2;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(12px);
-  transition: 0.5s ease;
-  font-size: 15px;
-}
-.step.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.step.completed { border-color: lime; background-color: #141414dd; }
-.step span { text-align: right; font-size: inherit; }
-.check { font-size: 18px; }
-a { color: white; text-decoration: none; display: flex; align-items: center; width: 100%; justify-content: space-between; }
-.loading { display: inline-block; width: 14px; height: 14px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-.final-section { margin-top: 25px; }
-.final-message { font-size: 16px; margin-bottom: 12px; color: red; text-shadow: 0 0 5px red; text-align: center; }
-.final-buttons { background: #111c; border-radius: 14px; border: 2px solid #444; padding: 12px 10px; width: 100%; box-shadow: 0 0 12px #0ff4; }
-.final-buttons a {
-  display: block;
-  background-color: #555;
-  color: white;
-  padding: 10px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: bold;
-  margin: 8px auto;
-  pointer-events: none;
-  opacity: 0.5;
-  transition: 0.3s;
-  box-shadow: 0 0 5px #000;
-  text-align: center;
-}
-.final-buttons a.active { background-color: #0c0; pointer-events: auto; opacity: 1; box-shadow: 0 0 12px #0f0; }
-.final-buttons a.btn-guide { background-color: #06c !important; }
-.final-buttons a:hover { transform: scale(1.02); }
-@media (max-width: 480px) {
-  h2 { font-size: 22px; }
-  .step { font-size: 17px; padding: 18px; border-radius: 18px; width: 100%; }
-  .check { font-size: 22px; }
-  .final-message { font-size: 18px; }
-  .final-buttons a { font-size: 17px; padding: 16px; border-radius: 18px; width: 100%; }
-  .progress-container { height: 24px; }
-  .loading { width: 18px; height: 18px; }
-  .top-image-container img { width: 100%; height: auto; max-height: 380px; object-fit: cover; }
-}
-#copyPopup {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0,255,255,0.9);
-  color: #000;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: bold;
-  box-shadow: 0 0 15px #0ff7;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s;
-  z-index: 9999;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>نفذ الشروط</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background: #111;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 10px;
+    }
+    .page-container {
+      width: 100%;
+      max-width: 600px;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 0 25px #0ff8;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .top-image-container {
+      background: linear-gradient(45deg, #06f, #0ff);
+      padding: 10px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 18px #0ff8;
+    }
+    .top-image-container img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      height: auto;
+    }
+    h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #00ffff;
+      text-shadow: 0 0 8px #0ff, 0 0 15px #0ff;
+      text-align: center;
+    }
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      background-color: #444;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #0ff6;
+      margin-bottom: 25px;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0ff, #00f);
+      transition: width 0.5s ease;
+      border-radius: 12px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #111a;
+      border: 2px solid #444;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin: 12px auto;
+      width: 100%;
+      box-shadow: 0 0 10px #0ff2;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: 0.5s ease;
+      font-size: 15px;
+    }
+    .step.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .step.completed { border-color: lime; background-color: #141414dd; }
+    .step span { text-align: right; font-size: inherit; }
+    .check { font-size: 18px; }
+    a { color: white; text-decoration: none; display: flex; align-items: center; width: 100%; justify-content: space-between; }
+    .loading { display: inline-block; width: 14px; height: 14px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .final-section { margin-top: 25px; }
+    .final-message { font-size: 16px; margin-bottom: 12px; color: red; text-shadow: 0 0 5px red; text-align: center; }
+    .final-buttons { background: #111c; border-radius: 14px; border: 2px solid #444; padding: 12px 10px; width: 100%; box-shadow: 0 0 12px #0ff4; }
+    .final-buttons a {
+      display: block;
+      background-color: #555;
+      color: white;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      margin: 8px auto;
+      pointer-events: none;
+      opacity: 0.5;
+      transition: 0.3s;
+      box-shadow: 0 0 5px #000;
+      text-align: center;
+    }
+    .final-buttons a.active { background-color: #0c0; pointer-events: auto; opacity: 1; box-shadow: 0 0 12px #0f0; }
+    .final-buttons a.btn-guide { background-color: #06c !important; }
+    .final-buttons a:hover { transform: scale(1.02); }
+    @media (max-width: 480px) {
+      h2 { font-size: 22px; }
+      .step { font-size: 17px; padding: 18px; border-radius: 18px; width: 100%; }
+      .check { font-size: 22px; }
+      .final-message { font-size: 18px; }
+      .final-buttons a { font-size: 17px; padding: 16px; border-radius: 18px; width: 100%; }
+      .progress-container { height: 24px; }
+      .loading { width: 18px; height: 18px; }
+      .top-image-container img { width: 100%; height: auto; max-height: 380px; object-fit: cover; }
+    }
+    #copyPopup {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,255,255,0.9);
+      color: #000;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      box-shadow: 0 0 15px #0ff7;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+      z-index: 9999;
+    }
+  </style>
 </head>
 <body>
 
@@ -154,36 +154,33 @@ a { color: white; text-decoration: none; display: flex; align-items: center; wid
     <div class="progress-bar" id="progressBar"></div>
   </div>
 
+  <!-- خطوات -->
   <div id="step1" class="step active">
-    <a href="#" onclick="completeStep(1, 'https://www.youtube.com/@MRGAMESFF-k3q'); return false;">
+    <a href="#" onclick="completeStep(1,'https://www.youtube.com/@MRGAMESFF-k3q'); return false;">
       <span>📺🔔 اضغط هنا وقم بالاشتراك في القناة 1 وتفعيل زر الجرس</span>
       <span id="check1">➡️</span>
     </a>
   </div>
-
   <div id="step2" class="step">
-    <a href="#" onclick="completeStep(2, 'https://www.youtube.com/@DarkPanda-DP'); return false;">
+    <a href="#" onclick="completeStep(2,'https://www.youtube.com/@DarkPanda-DP'); return false;">
       <span>📺🔔 اضغط هنا وقم بالاشتراك في القناة 2 وتفعيل زر الجرس</span>
       <span id="check2">➡️</span>
     </a>
   </div>
-
   <div id="step3" class="step">
-    <a href="#" onclick="completeStep(3, 'https://youtu.be/nwux0chwK-k'); return false;">
+    <a href="#" onclick="completeStep(3,'https://youtu.be/nwux0chwK-k'); return false;">
       <span>👍💬 اضغط هنا وقم بعمل لايك وتعليق مميز للفيديو الذي ستراه</span>
       <span id="check3">➡️</span>
     </a>
   </div>
-
   <div id="step4" class="step">
-    <a href="#" onclick="completeStep(4, 'https://www.youtube.com/@DarkPandaff-1'); return false;">
+    <a href="#" onclick="completeStep(4,'https://www.youtube.com/@DarkPandaff-1'); return false;">
       <span>📺🔔 اضغط هنا وقم بالاشتراك في القناة 3 وتفعيل زر الجرس</span>
       <span id="check4">➡️</span>
     </a>
   </div>
-
   <div id="step5" class="step">
-    <a href="#" onclick="completeStep(5, 'https://whatsapp.com/channel/0029VbBqJeLISTkQCWBkXa1x'); return false;">
+    <a href="#" onclick="completeStep(5,'https://whatsapp.com/channel/0029VbBqJeLISTkQCWBkXa1x'); return false;">
       <span>💬📲 اضغط هنا وقم بالاشتراك في قناة الواتس اب هذه</span>
       <span id="check5">➡️</span>
     </a>
@@ -203,28 +200,82 @@ a { color: white; text-decoration: none; display: flex; align-items: center; wid
 document.getElementById("mainImage").addEventListener("contextmenu", e => e.preventDefault());
 
 const STEP_EXPIRY_MS = 365*24*60*60*1000;
-const step3StorageKey = "step3States_v64348384354246235_page9264747545334623263";
-const step4StorageKey = "step4States_v54566665_page55599955";
-const step5StorageKey = "step5States_whatsapp_channel";
 const stepsStateKey = "stepsState";
 
-function isStateExpired(savedState) { if(!savedState.timestamp) return true; return Date.now()-savedState.timestamp>STEP_EXPIRY_MS; }
+function isStateExpired(savedState){ return !savedState.timestamp || (Date.now() - savedState.timestamp > STEP_EXPIRY_MS); }
 
-function unlockButtons() {
-  const step5State = JSON.parse(localStorage.getItem(step5StorageKey)||"{}");
-  const allCompleted = [1,2].every(i=>document.getElementById("step"+i).classList.contains("completed")) &&
-                       document.getElementById("step3").classList.contains("completed") &&
-                       document.getElementById("step4").classList.contains("completed") &&
-                       step5State.completed;
+window.onload = ()=>{
+  const savedState = JSON.parse(localStorage.getItem(stepsStateKey)||"{}");
+  if(isStateExpired(savedState)){ localStorage.removeItem(stepsStateKey); }
+
+  // تفعيل الخطوات المكتملة بالترتيب
+  for(let i=1;i<=5;i++){
+    if(savedState["step"+i]){
+      document.getElementById("step"+i).classList.add("completed");
+      document.getElementById("check"+i).innerText="✅";
+      if(i<5) document.getElementById("step"+(i+1)).classList.add("active");
+    } else break;
+  }
+
+  unlockButtons();
+  updateProgressBar();
+
+  // تمرير الى أول خطوة غير مكتملة
+  for(let i=1;i<=5;i++){
+    if(!document.getElementById("step"+i).classList.contains("completed")){
+      setTimeout(()=>{document.getElementById("step"+i).scrollIntoView({behavior:"smooth",block:"center"});},600);
+      break;
+    }
+  }
+};
+
+function saveStepState(step){
+  const current=JSON.parse(localStorage.getItem(stepsStateKey)||"{}");
+  current["step"+step]=true;
+  current.timestamp=Date.now();
+  localStorage.setItem(stepsStateKey,JSON.stringify(current));
+}
+
+function completeStep(step,url=null){
+  const stepEl=document.getElementById("step"+step);
+  const check=document.getElementById("check"+step);
+
+  if(url && stepEl.classList.contains("completed")){
+    window.open(url,"_blank"); // فتح الرابط فوراً إذا مكتملة
+    return;
+  }
+
+  if(url) window.open(url,"_blank");
+  check.innerHTML='<span class="loading"></span>';
+
+  setTimeout(()=>{
+    stepEl.classList.add("completed");
+    check.innerText="✅";
+    saveStepState(step);
+
+    if(step<5){
+      const nextStep=document.getElementById("step"+(step+1));
+      if(nextStep) nextStep.classList.add("active");
+      setTimeout(()=>{nextStep.scrollIntoView({behavior:"smooth",block:"center"});},300);
+    }
+
+    unlockButtons();
+    updateProgressBar();
+  },10000);
+}
+
+function unlockButtons(){
+  let allCompleted=true;
+  for(let i=1;i<=5;i++){ if(!document.getElementById("step"+i).classList.contains("completed")) allCompleted=false; }
   if(allCompleted){
-    document.getElementById("finalMessage").innerText = "✅ تم تنفيذ كل الخطوات بنجاح";
-    document.getElementById("finalMessage").style.color = "lime";
+    document.getElementById("finalMessage").innerText="✅ تم تنفيذ كل الخطوات بنجاح";
+    document.getElementById("finalMessage").style.color="lime";
     document.getElementById("btnDownload").classList.add("active");
 
-    setTimeout(()=>{document.getElementById("btnDownload").scrollIntoView({behavior:"smooth", block:"center"});}, 800);
+    setTimeout(()=>{document.getElementById("btnDownload").scrollIntoView({behavior:"smooth",block:"center"});},800);
 
     if(!document.getElementById("btnGuide")){
-      const guideBtn = document.createElement("a");
+      const guideBtn=document.createElement("a");
       guideBtn.id="btnGuide";
       guideBtn.href="https://youtu.be/1xHkQ8gYuMA";
       guideBtn.target="_blank";
@@ -242,91 +293,17 @@ function updateProgressBar(){
   document.getElementById("progressBar").style.width=(done/5)*100+"%";
 }
 
-function saveStepState(step){
-  const current=JSON.parse(localStorage.getItem(stepsStateKey)||"{}");
-  current["step"+step]=true;
-  current.timestamp=Date.now();
-  localStorage.setItem(stepsStateKey,JSON.stringify(current));
+// منع النسخ بالزر الايمن على الخطوات
+for(let i=1;i<=5;i++){
+  document.getElementById("step"+i).addEventListener("contextmenu",e=>e.preventDefault());
 }
-
-function completeStep(step,url=null){
-  const stepEl=document.getElementById("step"+step);
-  const check=document.getElementById("check"+step);
-  if(stepEl.classList.contains("completed")) return;
-  if(url) window.open(url,"_blank");
-
-  check.innerHTML='<span class="loading"></span>';
-  setTimeout(()=>{
-    stepEl.classList.add("completed");
-    check.innerText="✅";
-
-    if(step===3) localStorage.setItem(step3StorageKey,JSON.stringify({completed:true,timestamp:Date.now()}));
-    else if(step===4) localStorage.setItem(step4StorageKey,JSON.stringify({completed:true,timestamp:Date.now()}));
-    else if(step===5) localStorage.setItem(step5StorageKey,JSON.stringify({completed:true,timestamp:Date.now()}));
-    else saveStepState(step);
-
-    const nextStep=document.getElementById("step"+(step+1));
-    if(nextStep && !nextStep.classList.contains("completed")) nextStep.classList.add("active");
-
-    unlockButtons();
-    updateProgressBar();
-
-    if(nextStep) setTimeout(()=>{nextStep.scrollIntoView({behavior:"smooth", block:"center"});},500);
-  },10000);
-}
-
-window.onload = ()=>{
-  const savedState=JSON.parse(localStorage.getItem(stepsStateKey)||"{}");
-  const step3State=JSON.parse(localStorage.getItem(step3StorageKey)||"{}");
-  const step4State=JSON.parse(localStorage.getItem(step4StorageKey)||"{}");
-  const step5State=JSON.parse(localStorage.getItem(step5StorageKey)||"{}");
-
-  if(isStateExpired(savedState)){
-    localStorage.removeItem(stepsStateKey);
-    localStorage.removeItem(step3StorageKey);
-    localStorage.removeItem(step4StorageKey);
-    localStorage.removeItem(step5StorageKey);
-  }
-
-  for(let i=1;i<=2;i++){ if(savedState["step"+i]){
-    document.getElementById("step"+i).classList.add("completed");
-    document.getElementById("check"+i).innerText="✅";
-  }}
-
-  if(step3State.completed){
-    document.getElementById("step3").classList.add("completed");
-    document.getElementById("check3").innerText="✅";
-  }
-  if(step4State.completed){
-    document.getElementById("step4").classList.add("completed");
-    document.getElementById("check4").innerText="✅";
-  }
-  if(step5State.completed){
-    document.getElementById("step5").classList.add("completed");
-    document.getElementById("check5").innerText="✅";
-  }
-
-  for(let i=1;i<=5;i++){
-    const stepEl=document.getElementById("step"+i);
-    if(!stepEl.classList.contains("completed")){
-      stepEl.classList.add("active");
-      setTimeout(()=>{stepEl.scrollIntoView({behavior:"smooth", block:"center"});},600);
-      break;
-    }
-  }
-
-  unlockButtons();
-  updateProgressBar();
-
-  for(let i=1;i<=5;i++) document.getElementById("step"+i).addEventListener("contextmenu",e=>e.preventDefault());
-};
 
 function goToDownload(){ window.open("https://linkjust.com/eYtCR","_blank"); }
 
+// نسخ الرابط مع popup
 const downloadBtn=document.getElementById("btnDownload");
 const copyPopup=document.getElementById("copyPopup");
 let pressTimer;
-
 function copyLink(){
   const link=downloadBtn.getAttribute("href");
   navigator.clipboard.writeText(link).then(()=>{
@@ -339,11 +316,11 @@ function copyLink(){
     setTimeout(()=>{copyPopup.style.opacity=0;},2000);
   });
 }
-
 downloadBtn.addEventListener("contextmenu",e=>{ e.preventDefault(); copyLink(); });
-downloadBtn.addEventListener("touchstart",e=>{ pressTimer=setTimeout(copyLink,1000); });
-downloadBtn.addEventListener("touchend",e=>{ clearTimeout(pressTimer); });
-downloadBtn.addEventListener("touchmove",e=>{ clearTimeout(pressTimer); });
+downloadBtn.addEventListener("touchstart",e=>{ downloadBtn.style.backgroundColor="#444"; pressTimer=setTimeout(copyLink,1000); });
+downloadBtn.addEventListener("touchend",e=>{ clearTimeout(pressTimer); downloadBtn.style.backgroundColor=""; });
+downloadBtn.addEventListener("touchmove",e=>{ clearTimeout(pressTimer); downloadBtn.style.backgroundColor=""; });
+
 </script>
 </body>
 </html>
