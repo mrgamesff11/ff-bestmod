@@ -226,44 +226,51 @@ window.onload = () => {
     localStorage.removeItem(step5StorageKey);
   }
 
-  // تحقق من كل خطوة بالترتيب
+  let lastCompletedStep = 0;
+
   if(savedState.step1){
     document.getElementById("step1").classList.add("completed");
     document.getElementById("check1").innerText = "✅";
-    document.getElementById("step2").classList.add("active");
+    lastCompletedStep = 1;
   }
 
-  if(savedState.step2){
+  if(savedState.step2 && lastCompletedStep === 1){
     document.getElementById("step2").classList.add("completed");
     document.getElementById("check2").innerText = "✅";
-    if(savedState.step1) document.getElementById("step3").classList.add("active");
+    lastCompletedStep = 2;
   }
 
-  if(step3State.completed){
+  if(step3State.completed && lastCompletedStep === 2){
     document.getElementById("step3").classList.add("completed");
     document.getElementById("check3").innerText = "✅";
-    if(savedState.step2) document.getElementById("step4").classList.add("active");
+    lastCompletedStep = 3;
   }
 
-  if(step4State.completed){
+  if(step4State.completed && lastCompletedStep === 3){
     document.getElementById("step4").classList.add("completed");
     document.getElementById("check4").innerText = "✅";
-    if(step3State.completed) document.getElementById("step5").classList.add("active");
+    lastCompletedStep = 4;
   }
 
-  if(step5State.completed){
+  if(step5State.completed && lastCompletedStep === 4){
     document.getElementById("step5").classList.add("completed");
     document.getElementById("check5").innerText = "✅";
+    lastCompletedStep = 5;
+  }
+
+  // تفعيل الخطوة التالية فقط بعد اكتمال السابقة
+  const nextStep = lastCompletedStep + 1;
+  if(nextStep <= 5){
+    document.getElementById("step"+nextStep).classList.add("active");
   }
 
   unlockButtons();
   updateProgressBar();
 
-  for(let i=1;i<=5;i++){
-    if(!document.getElementById("step"+i).classList.contains("completed")){
-      setTimeout(()=>{document.getElementById("step"+i).scrollIntoView({behavior:"smooth",block:"center"});},600);
-      break;
-    }
+  if(nextStep <= 5){
+    setTimeout(()=>{
+      document.getElementById("step"+nextStep).scrollIntoView({behavior:"smooth",block:"center"});
+    }, 600);
   }
 };
 
@@ -275,110 +282,3 @@ function saveStepState(step){
 }
 
 function completeStep(step,url=null){
-  const stepEl = document.getElementById("step"+step);
-  const check = document.getElementById("check"+step);
-
-  if(stepEl.classList.contains("completed")) return;
-
-  for(let i=1;i<step;i++){
-    if(!document.getElementById("step"+i).classList.contains("completed")){
-      alert("❌ يجب تنفيذ الخطوة السابقة أولاً");
-      return;
-    }
-  }
-
-  if(url) window.open(url,"_blank");
-  check.innerHTML='<span class="loading"></span>';
-
-  setTimeout(()=>{
-    stepEl.classList.add("completed");
-    check.innerText="✅";
-
-    if(step===3){
-      localStorage.setItem(step3StorageKey,JSON.stringify({completed:true,timestamp:Date.now()}));
-    }else if(step===4){
-      localStorage.setItem(step4StorageKey,JSON.stringify({completed:true,timestamp:Date.now()}));
-    }else if(step===5){
-      localStorage.setItem(step5StorageKey,JSON.stringify({completed:true,timestamp:Date.now()}));
-    }else{
-      saveStepState(step);
-    }
-
-    const nextStep=document.getElementById("step"+(step+1));
-    if(nextStep) nextStep.classList.add("active");
-
-    unlockButtons();
-    updateProgressBar();
-
-    if(nextStep) setTimeout(()=>{nextStep.scrollIntoView({behavior:"smooth",block:"center"});},500);
-  },10000);
-}
-
-function unlockButtons(){
-  const step5State=JSON.parse(localStorage.getItem(step5StorageKey)||"{}");
-  const allCompleted=[1,2].every(i=>document.getElementById("step"+i).classList.contains("completed")) &&
-                     document.getElementById("step3").classList.contains("completed") &&
-                     document.getElementById("step4").classList.contains("completed") &&
-                     step5State.completed;
-  if(allCompleted){
-    document.getElementById("finalMessage").innerText="✅ تم تنفيذ كل الخطوات بنجاح";
-    document.getElementById("finalMessage").style.color="lime";
-    document.getElementById("btnDownload").classList.add("active");
-
-    setTimeout(()=>{document.getElementById("btnDownload").scrollIntoView({behavior:"smooth",block:"center"});},800);
-
-    if(!document.getElementById("btnGuide")){
-      const guideBtn=document.createElement("a");
-      guideBtn.id="btnGuide";
-      guideBtn.href="https://youtu.be/1xHkQ8gYuMA";
-      guideBtn.target="_blank";
-      guideBtn.className="btn-guide active";
-      guideBtn.innerText="❓ إذا واجهت أي مشكلة في التحميل اضغط هنا";
-      document.querySelector(".final-buttons").appendChild(guideBtn);
-      guideBtn.addEventListener("contextmenu",e=>e.preventDefault());
-    }
-  }
-}
-
-function updateProgressBar(){
-  let done=0;
-  for(let i=1;i<=5;i++){
-    if(document.getElementById("step"+i).classList.contains("completed")) done++;
-  }
-  document.getElementById("progressBar").style.width=(done/5)*100+"%";
-}
-
-for(let i=1;i<=5;i++){
-  document.getElementById("step"+i).addEventListener("contextmenu",e=>e.preventDefault());
-}
-
-function goToDownload(){ window.open("https://linkjust.com/eYtCR","_blank"); }
-
-const downloadBtn=document.getElementById("btnDownload");
-const copyPopup=document.getElementById("copyPopup");
-let pressTimer;
-
-function copyLink(){
-  const link=downloadBtn.getAttribute("href");
-  navigator.clipboard.writeText(link).then(()=>{
-    copyPopup.innerText="✅ تم نسخ الرابط: "+link;
-    copyPopup.style.opacity=1;
-    setTimeout(()=>{copyPopup.style.opacity=0;},2000);
-  }).catch(()=>{
-    copyPopup.innerText="❌ فشل نسخ الرابط، حاول مرة أخرى";
-    copyPopup.style.opacity=1;
-    setTimeout(()=>{copyPopup.style.opacity=0;},2000);
-  });
-}
-
-downloadBtn.addEventListener("contextmenu",e=>{ e.preventDefault(); copyLink(); });
-downloadBtn.addEventListener("touchstart",e=>{
-  downloadBtn.style.backgroundColor="#444";
-  pressTimer=setTimeout(copyLink,1000);
-});
-downloadBtn.addEventListener("touchend",e=>{ clearTimeout(pressTimer); downloadBtn.style.backgroundColor=""; });
-downloadBtn.addEventListener("touchmove",e=>{ clearTimeout(pressTimer); downloadBtn.style.backgroundColor=""; });
-
-</script>
-</body>
-</html>
